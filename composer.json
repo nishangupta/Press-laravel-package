@@ -1,15 +1,27 @@
 {
-    "name": "nishangupta/press",
-    "description": "An elegant markdown powered blog for the laravel framework.",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "nisangupta",
-            "email": "nishangupta@icloud.com"
-        }
-    ],
-    "require": {},
-    "require-dev": {
-        "orchestra/testbench": "^6.2"
+  "name": "nishangupta/press",
+  "description": "An elegant markdown powered blog for the laravel framework.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "nisangupta",
+      "email": "nishangupta@icloud.com"
     }
+  ],
+  "require": {},
+  "require-dev": {
+    "orchestra/testbench": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "nishangupta\\Press\\": "src/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "nishangupta\\Press\\Tests": "tests/"
+    }
+  }
 }
