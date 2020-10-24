@@ -1,0 +1,15 @@
+{
+    "name": "nishangupta/press",
+    "description": "An elegant markdown powered blog for the laravel framework.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nisangupta",
+            "email": "nishangupta@icloud.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "orchestra/testbench": "^6.2"
+    }
+}
