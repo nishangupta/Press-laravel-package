@@ -2,6 +2,7 @@
 
 namespace nishangupta\Press;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
 class PressFileParser
@@ -15,6 +16,7 @@ class PressFileParser
 
     $this->splitFile();
     $this->explodeData();
+    $this->processFields();
   }
 
   public function getData()
@@ -24,9 +26,10 @@ class PressFileParser
 
   protected function explodeData()
   {
-    foreach (explode("\r\n", trim($this->data[1])) as $fieldString) {
+    $fieldStrings = explode("\r\n", trim($this->data[1]));
+    foreach ($fieldStrings as $fieldString) {
       preg_match('/(.*):\s?(.*)/', $fieldString, $fieldArray);
-      $this->data[$fieldArray[1]] = $fieldArray[2];
+      $this->data[$fieldArray[1]] = trim($fieldArray[2]);
     }
     $this->data['body'] = trim($this->data[2]);
   }
@@ -38,5 +41,15 @@ class PressFileParser
       File::exists($this->filename) ? File::get($this->filename) : $this->filename,
       $this->data
     );
+  }
+  protected function processFields()
+  {
+    foreach ($this->data as $field => $value) {
+      if ($field === 'date') {
+        $this->data[$field] = Carbon::parse($value);
+      } else if ($field === 'body') {
+        $this->data[$field] = Markdownparser::parse($value);
+      }
+    }
   }
 }

@@ -2,6 +2,7 @@
 
 namespace nishangupta\Press\Tests;
 
+use Carbon\Carbon;
 use nishangupta\Press\PressFileParser;
 use Orchestra\Testbench\TestCase;
 
@@ -22,12 +23,12 @@ class PressFileParserTest extends TestCase
   /** @test */
   public function a_string_can_also_be_used_instead()
   {
-    $pressFileParser = new PressFileParser('---\ntitle:My title\n---\nBlog post body here');
+    $pressFileParser = new PressFileParser("---\ntitle: My Title\n---\nBlog post body here");
 
     $data = $pressFileParser->getData();
 
-    $this->assertStringContainsString('title: My Title', $data[1]);
-    $this->assertStringContainsString('Blog post body here', $data[2]);
+    $this->assertEquals('title: My Title', trim($data[1]));
+    $this->assertEquals('Blog post body here', trim($data[2]));
   }
 
   /** @test */
@@ -48,6 +49,17 @@ class PressFileParserTest extends TestCase
 
     $data = $pressFileParser->getData();
 
-    $this->assertEquals("# heading\n\nBlog post body here", $data['body']);
+    $this->assertEquals("<h1>heading</h1>\n<p>Blog post body here</p>", $data['body']);
+  }
+
+  /** @test */
+  public function a_date_field_gets_parsed()
+  {
+    $pressFileParser = new PressFileParser("---\ndate: May 14,1998\n---");
+
+    $data = $pressFileParser->getData();
+
+    $this->assertInstanceOf(Carbon::class, $data['date']);
+    $this->assertEquals('05/14/1998', $data['date']->format('m/d/Y'));
   }
 }
