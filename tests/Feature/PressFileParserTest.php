@@ -4,7 +4,6 @@ namespace nishangupta\Press\Tests;
 
 use Carbon\Carbon;
 use nishangupta\Press\PressFileParser;
-use Orchestra\Testbench\TestCase;
 
 class PressFileParserTest extends TestCase
 {

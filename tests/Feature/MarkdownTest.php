@@ -2,7 +2,6 @@
 
 namespace nishangupta\Press\Tests;
 
-use Orchestra\Testbench\TestCase;
 use nishangupta\Press\MarkdownParser;
 
 class MarkdownTest extends TestCase
