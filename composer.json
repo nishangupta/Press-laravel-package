@@ -8,7 +8,9 @@
       "email": "nishangupta@icloud.com"
     }
   ],
-  "require": {},
+  "require": {
+    "erusev/parsedown": "^1.7"
+  },
   "require-dev": {
     "orchestra/testbench": "^6.2"
   },
@@ -19,7 +21,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "nishangupta\\Press\\Tests": "tests/"
+      "nishangupta\\Press\\Tests\\": "tests/"
     }
   }
 }
