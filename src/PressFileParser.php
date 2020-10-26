@@ -14,6 +14,7 @@ class PressFileParser
     $this->filename = $filename;
 
     $this->splitFile();
+    $this->explodeData();
   }
 
   public function getData()
@@ -21,11 +22,20 @@ class PressFileParser
     return $this->data;
   }
 
+  protected function explodeData()
+  {
+    foreach (explode("\r\n", trim($this->data[1])) as $fieldString) {
+      preg_match('/(.*):\s?(.*)/', $fieldString, $fieldArray);
+      $this->data[$fieldArray[1]] = $fieldArray[2];
+    }
+    $this->data['body'] = trim($this->data[2]);
+  }
+
   protected function splitFile()
   {
     preg_match(
       '/^\-{3}(.*?)\-{3}(.*)/s',
-      File::get($this->filename),
+      File::exists($this->filename) ? File::get($this->filename) : $this->filename,
       $this->data
     );
   }
